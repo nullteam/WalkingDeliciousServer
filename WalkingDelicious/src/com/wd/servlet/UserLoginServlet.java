@@ -34,7 +34,7 @@ public class UserLoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String usernameString = req.getParameter(USERNAME_CLIENT);
 		String passwordString = req.getParameter(PASSWORD_CLIENT);
-		
+		if(usernameString==null||passwordString==null) return;
 		User user = new User(usernameString,passwordString);
 		UserDao dao  = new UserDao();
 		LoginState state  = dao.userVerify(user);

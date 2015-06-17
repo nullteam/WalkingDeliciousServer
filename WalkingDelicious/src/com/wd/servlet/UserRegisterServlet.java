@@ -34,6 +34,9 @@ public class UserRegisterServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		if (req.getParameter(USERNAME_CLIENT)==null||req.getParameter(PASSWORD_CLIENT)==null) {
+			return;
+		}
 		User user = new User(req.getParameter(USERNAME_CLIENT), req.getParameter(PASSWORD_CLIENT));
 		RegisterState state = null;
 		UserDao dao  = new UserDao();
