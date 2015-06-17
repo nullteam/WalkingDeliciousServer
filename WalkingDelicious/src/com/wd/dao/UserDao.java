@@ -137,7 +137,7 @@ public class UserDao {
 		Boolean flag = true;
 		//判断字符串的长度
 		int strLength = arg.length();
-		if(strLength<6&&strLength>12) return false;
+		if(strLength<6||strLength>12) return false;
 		
 		//判断首字符是否是字母
 		char firstChar = arg.charAt(0);
