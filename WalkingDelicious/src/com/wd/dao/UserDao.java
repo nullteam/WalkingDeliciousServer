@@ -8,21 +8,43 @@ import com.wd.model.User;
 import com.wd.util.DBUtil;
 
 public class UserDao {
-	//存储用户信息的表在数据库中的名称
+	//user实体在数据库中的表名
 	private final String USER_TABLE_NAME="t_user";
-	//CRUD常用操作的SQL语句模板
-	private final String USER_UPDATE_STRING = "UPDATE "+USER_TABLE_NAME+" SET  username=?,password=? WHERE username=?";
-	private final String USER_ADD_STRING = "INSERT INTO "+USER_TABLE_NAME+" VALUES(NULL,?,?)";
-	private final String USER_DELETE_STRING = "DELETE * FROM "+USER_TABLE_NAME+" WHERE username=? AND password=?";
-	private final String USER_QUERY_STRING = "SELECT * FROM "+USER_TABLE_NAME+" WHERE username=?";
-	//数据库的user表中用户名和密码两个字段的名称
+	
+	//表中id、用户名和密码两个字段的名称
 	private final String USERNAME_TABLE = "username";
 	private final String PASSWORD_TABLE = "password";
+	private final String ID_TABLE		= "id";
+	
+	//CRUD常用操作的SQL语句模板
+	private final String USER_UPDATE_STRING = "UPDATE "+USER_TABLE_NAME+" SET  "+USERNAME_TABLE+"=?,"+PASSWORD_TABLE+"=? WHERE "+USERNAME_TABLE+"=?";
+	private final String USER_ADD_STRING = "INSERT INTO "+USER_TABLE_NAME+" VALUES(NULL,?,?)";
+	private final String USER_DELETE_STRING = "DELETE * FROM "+USER_TABLE_NAME+" WHERE "+USERNAME_TABLE+"=? AND "+PASSWORD_TABLE+"=?";
+	private final String USER_SELECT_STRING = "SELECT * FROM "+USER_TABLE_NAME+" WHERE "+USERNAME_TABLE+"=?";
+	
 	//指示登录状态的枚举类型
 	public enum LoginState{LOGIN_SUCCESS,USER_NOT_EXIT,PASSWORD_ERROR,ILLEGAL,NETWORK_ERROR}
 	//指示注册注册状态的枚举类型
 	public enum RegisterState{REGISTER_SUCCESS,ILLEGAL,USER_EXISTED};
 	public UserDao() {
+	}
+	
+	public User getUserById(Integer argId){
+		if(argId==null) return null;
+		User retUser = null;
+		try {
+			String sqlString = "SELECT * FROM "+USER_TABLE_NAME+" WHERE "+ID_TABLE+"=?";
+			PreparedStatement ps = DBUtil.getInstance().getConnection().prepareStatement(sqlString);
+			ps.setInt(1, argId);
+		 	ResultSet ret  = ps.executeQuery();
+			if(ret.next()){
+				retUser = new User(ret.getInt(ID_TABLE),ret.getString(USERNAME_TABLE), ret.getString(PASSWORD_TABLE));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("create PreparedStatement failed!!!");
+		}
+		return retUser;
 	}
 	//添加用户
 	public Boolean addUser(User user){
@@ -48,20 +70,17 @@ public class UserDao {
 	public User findUser(User user){
 		if(user==null) return null;
 		User retUser = null;
-		ResultSet ret = null;
-		PreparedStatement ps =null;
 		try {
-			ps = DBUtil.getInstance().getConnection().prepareStatement(USER_QUERY_STRING);
+			PreparedStatement ps = DBUtil.getInstance().getConnection().prepareStatement(USER_SELECT_STRING);
 			ps.setString(1, user.getUsername());
-			ret  = ps.executeQuery();
+		 	ResultSet ret  = ps.executeQuery();
 			if(ret.next()){
-				retUser = new User(ret.getString(USERNAME_TABLE), ret.getString(PASSWORD_TABLE));
+				retUser = new User(ret.getInt(ID_TABLE),ret.getString(USERNAME_TABLE), ret.getString(PASSWORD_TABLE));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("create PreparedStatement failed!!!");
 		}
-		
 		return retUser;
 	}
 	//删除用户

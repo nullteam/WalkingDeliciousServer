@@ -21,10 +21,21 @@
         <servlet-name>UserRegisterServlet</servlet-name>
         <servlet-class>com.wd.servlet.UserRegisterServlet</servlet-class>
     </servlet>
+  <servlet>
+    <description>process order</description>
+    <display-name>process order</display-name>
+    <servlet-name>ProcessOrder</servlet-name>
+    <servlet-class>com.wd.servlet.ProcessOrder</servlet-class>
+  </servlet>
+
     <servlet-mapping>
         <servlet-name>UserRegisterServlet</servlet-name>
         <url-pattern>/userRegister</url-pattern>
     </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProcessOrder</servlet-name>
+    <url-pattern>/processOrder</url-pattern>
+  </servlet-mapping>
     <context-param>
         <param-name>dbURL</param-name>
         <param-value>jdbc:mysql://localhost:3306/walking_delicious</param-value>
