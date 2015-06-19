@@ -5,10 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.eclipse.jdt.internal.compiler.ast.TrueLiteral;
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 import com.wd.model.Favorite;
 import com.wd.model.Restaurant;
 import com.wd.model.User;
