@@ -101,6 +101,7 @@ public class ProcessOrder extends HttpServlet {
 		}
 		
 		PrintWriter out = response.getWriter();
+		response.setCharacterEncoding("utf-8");	
 		out.println(jsonObject.toString());
 		out.flush();
 		out.close();
@@ -126,7 +127,7 @@ public class ProcessOrder extends HttpServlet {
 				phone==null				
 		) return flag;
 		OrderDao dao = new OrderDao();
-		Restaurant restaurant = new Restaurant(Integer.parseInt(restaurantId), name, address, phone);
+		Restaurant restaurant = new Restaurant(restaurantId, name, address, phone);
 		Order order  = new Order(Integer.parseInt(userId),restaurant,Integer.parseInt(orderNum));
 		flag=dao.addOrder(order);
 		return flag;

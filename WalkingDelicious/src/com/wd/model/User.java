@@ -19,6 +19,12 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public User(Integer id) {
+		this.id=id;
+		setUsername("");
+		setPassword("");
+	}
+	
 	public User(String argUername,String argPassword){
 		this.username = argUername;
 		this.password = argPassword;

@@ -27,17 +27,17 @@ public class RestaurantDao {
 	}
 
 	//select restaurant
-	public Restaurant getRestaurantById(Integer argId){
+	public Restaurant getRestaurantById(String argId){
 		if (argId==null) {
 			return null;
 		}
 		Restaurant ret =null;
 		try {
 			PreparedStatement ps = DBUtil.getInstance().getConnection().prepareStatement(RESTAURANT_SELECT_STRING);
-			ps.setInt(1, argId);
+			ps.setString(1, argId);
 			ResultSet set = ps.executeQuery();
 			if(set.next()){
-				ret = new Restaurant(set.getInt(ID_TABEL),set.getString(RESTAURANT_NAME_TABLE),set.getString(RESTAURANT_ADDRESS_TABLE),set.getString(RESTAURANT_PHONE_TABLE));
+				ret = new Restaurant(set.getString(ID_TABEL),set.getString(RESTAURANT_NAME_TABLE),set.getString(RESTAURANT_ADDRESS_TABLE),set.getString(RESTAURANT_PHONE_TABLE));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public class RestaurantDao {
 		if(value==null) return flag;
 		try {
 			PreparedStatement ps = DBUtil.getInstance().getConnection().prepareStatement(RESTAURANT_ADD_STRING);
-			ps.setInt(1, value.getId());
+			ps.setString(1, value.getId());
 			ps.setString(2, value.getRestaurantName());
 			ps.setString(3, value.getRestaurantAddress());
 			ps.setString(4, value.getRestaurantPhone());
@@ -72,13 +72,13 @@ public class RestaurantDao {
 	}
 	
 	//delete restaurant
-	public Boolean deleteRestaurantById(Integer value){
+	public Boolean deleteRestaurantById(String value){
 		Boolean flag=false;
 		if(value ==null )return flag;
 		try {
 			PreparedStatement ps  = DBUtil.getInstance().getConnection().prepareStatement(RESTAURANT_DELETE_STRING);
 			int result =-1;
-			ps.setInt(1, value);
+			ps.setString(1, value);
 			result = ps.executeUpdate();
 			flag  = result>0?true:false;
 		} catch (SQLException e) {

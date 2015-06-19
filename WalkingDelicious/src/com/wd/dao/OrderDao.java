@@ -25,7 +25,7 @@ public class OrderDao {
 	//CRUD常用操作的SQL语句模板
 	private final String ORDER_ADD_STRING	 = "INSERT INTO "+ORDER_TABLE_NAME+" VALUES(NULL,?,?,?,NULL)";
 	private final String ORDER_DELETE_STRING = "DELETE * FROM "+ORDER_TABLE_NAME+" WHERE 1=1";
-	private final String ORDER_UPDATE_STRING  ="UPDATE "+ORDER_TABLE_NAME+" SET "+USER_ID_TABLE+"=?,"+RESTAURANT_ID_TABLE+"=? WHERE "+ID_TABLE+"=?";
+	//private final String ORDER_UPDATE_STRING  ="UPDATE "+ORDER_TABLE_NAME+" SET "+USER_ID_TABLE+"=?,"+RESTAURANT_ID_TABLE+"=? WHERE "+ID_TABLE+"=?";
 	private final String ORDER_SELECT_STRING ="SELECT * FROM "+ORDER_TABLE_NAME+" WHERE 1=1";
 	public OrderDao() {
 	}
@@ -51,15 +51,7 @@ public class OrderDao {
 	public List<Order> getOrderByUser(User user){
 		return getOrderByUserId(user.getId());
 	}
-	
-	public List<Order> getOrderByRestaurantId(Integer value){
-		if(value==null) return new ArrayList<Order>();
-		return getOrderByEachId(RESTAURANT_ID_TABLE, value);
-	}
-	
-	public List<Order> getOrderByRestaurant(Restaurant restaurant) {
-		return getOrderByRestaurantId(restaurant.getId());
-	}	
+		
 	//delete order
 	
 	public Boolean deleteOrderById(Integer value){
@@ -80,15 +72,6 @@ public class OrderDao {
 		return deleteOrderByUserId(user.getId());
 	}
 	
-	public Boolean deleteOrderByRestaurantId(Integer value) {
-		return deleteOrderByEachId(RESTAURANT_ID_TABLE, value);
-	}
-	
-	public Boolean deleteOrderByRestaurant(Restaurant restaurant) {
-		if(restaurant==null) return new Boolean(false);
-		return deleteOrderByRestaurantId(restaurant.getId());
-	}
-	
 	
 	//add order
 	public Boolean addOrder(Order order){
@@ -100,7 +83,7 @@ public class OrderDao {
 			if(restaurant==null) dao.addRestaurant(order.getRestaurant());
 			PreparedStatement ps =DBUtil.getInstance().getConnection().prepareStatement(ORDER_ADD_STRING);
 			ps.setInt(1, order.getUserId());
-			ps.setInt(2, order.getRestaurantId());
+			ps.setString(2, order.getRestaurantId());
 			ps.setInt(3, order.getOrderNum());
 			int result = -1; 
 			result = ps.executeUpdate();
@@ -110,26 +93,6 @@ public class OrderDao {
 			System.out.println("create PreparedStatement failed!!!");
 		}
 		return flag;
-	}
-	//update order 未更新版
-	public Boolean updateOrder(Order order) {
-		Boolean flag =false;
-		if(order==null) return flag;
-		try {			
-			PreparedStatement ps =DBUtil.getInstance().getConnection().prepareStatement(ORDER_UPDATE_STRING);
-			ps.setInt(1, order.getUserId());
-			ps.setInt(2, order.getRestaurantId());
-			ps.setInt(3, order.getOrderNum());
-			ps.setInt(4, order.getId());
-			int result = -1;
-			result = ps.executeUpdate();
-			flag = result>0?true:false;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("create PreparedStatement failed!!!");
-		}
-		return  flag;
-		
 	}
 	
 	
@@ -161,7 +124,7 @@ public class OrderDao {
 			ResultSet set =ps.executeQuery();
 			while(set.next()){
 				Integer userInteger = set.getInt(USER_ID_TABLE);
-				Integer restaurantInteger = set.getInt(RESTAURANT_ID_TABLE);
+				String restaurantInteger = set.getString(RESTAURANT_ID_TABLE);
 				UserDao dao =new UserDao();
 				User user = dao.getUserById(userInteger);
 				RestaurantDao restaurantDao = new RestaurantDao();

@@ -12,13 +12,13 @@ public class Order {
 	public Order() {
 	}
 	
-	public Order(Integer id,Integer userId,Integer restaurantId,Integer num){
+	public Order(Integer id,Integer userId,String restaurantId,Integer num){
 		this.id = id;
 		this.user =new User(userId,"","");
 		this.restaurant = new Restaurant(restaurantId,"","","");
 		this.orderNum=num;	
 	}
-	public Order(Integer id,Integer userId,Integer restaurantId,Integer num,Timestamp time){
+	public Order(Integer id,Integer userId,String restaurantId,Integer num,Timestamp time){
 		this.id = id;
 		this.user =new User(userId,"","");
 		this.restaurant = new Restaurant(restaurantId,"","","");
@@ -26,7 +26,7 @@ public class Order {
 		this.orderTime = time;
 	}
 	
-	public Order(Integer id,Integer userId,Integer restaurantId,Integer num,String time){
+	public Order(Integer id,Integer userId,String restaurantId,Integer num,String time){
 		this.id = id;
 		this.user =new User(userId,"","");
 		this.restaurant = new Restaurant(restaurantId,"","","");
@@ -34,20 +34,20 @@ public class Order {
 		this.orderTime = new Timestamp(Integer.parseInt(time));
 	}
 	
-	public Order(Integer userId,Integer restaurantId,Integer num){
+	public Order(Integer userId,String restaurantId,Integer num){
 		this.user =new User(userId,"","");
 		this.restaurant = new Restaurant(restaurantId,"","","");
 		this.orderNum=num;
 	}
 	
-	public Order(Integer userId,Integer restaurantId,Integer num,Timestamp time){
+	public Order(Integer userId,String restaurantId,Integer num,Timestamp time){
 		this.user =new User(userId,"","");
 		this.restaurant = new Restaurant(restaurantId,"","","");
 		this.orderNum=num;
 		this.orderTime = time;
 	}
 	
-	public Order(Integer userId,Integer restaurantId,Integer num,String time){
+	public Order(Integer userId,String restaurantId,Integer num,String time){
 		this.user =new User(userId,"","");
 		this.restaurant = new Restaurant(restaurantId,"","","");
 		this.orderNum=num;
@@ -145,7 +145,7 @@ public class Order {
 		return this.user.getId();
 	}
 	
-	public Integer getRestaurantId() {
+	public String getRestaurantId() {
 		return this.restaurant.getId();
 	}
 

@@ -2,17 +2,21 @@ package com.wd.model;
 
 public class Restaurant {	
 	
-	private Integer 	id;
+	private String 		id;
 	private String		restaurantName;
 	private String 		restaurantAddress;
 	private String		restaurantPhone;
 	public Restaurant() {
 	}
-	public Restaurant(String argName){
-		setRestaurantName(argName);
+	public Restaurant(String id){
+		this.id=id;
+		setRestaurantName("");
+		setRestaurantAddress("");
+		setRestaurantPhone("");
 	}
+
 	
-	public Restaurant(Integer argId,String argName,String address,String phone){
+	public Restaurant(String argId,String argName,String address,String phone){
 		setId(argId);
 		setRestaurantName(argName);
 		setRestaurantAddress(address);
@@ -21,13 +25,13 @@ public class Restaurant {
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	private void setId(Integer id) {
+	private void setId(String id) {
 		this.id = id;
 	}
 	/**

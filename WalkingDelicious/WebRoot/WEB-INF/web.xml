@@ -27,6 +27,13 @@
     <servlet-name>ProcessOrder</servlet-name>
     <servlet-class>com.wd.servlet.ProcessOrder</servlet-class>
   </servlet>
+  <servlet>
+    <description>process favorite</description>
+    <display-name>process favorite</display-name>
+    <servlet-name>ProcessFavorite</servlet-name>
+    <servlet-class>com.wd.servlet.ProcessFavorite</servlet-class>
+  </servlet>
+
 
     <servlet-mapping>
         <servlet-name>UserRegisterServlet</servlet-name>
@@ -35,6 +42,10 @@
   <servlet-mapping>
     <servlet-name>ProcessOrder</servlet-name>
     <url-pattern>/processOrder</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProcessFavorite</servlet-name>
+    <url-pattern>/processFavorite</url-pattern>
   </servlet-mapping>
     <context-param>
         <param-name>dbURL</param-name>
