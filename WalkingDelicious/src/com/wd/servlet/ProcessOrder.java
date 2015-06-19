@@ -80,15 +80,15 @@ public class ProcessOrder extends HttpServlet {
 					 request.getParameter("restaurantAddress"),
 					 request.getParameter("restaurantPhone")
 					 );
-			 if(flagBoolean) jsonObject.put("result", "true");
-			 else jsonObject.put("result", "false");
+			 if(flagBoolean) jsonObject.put("result", "1");
+			 else jsonObject.put("result", "0");
 			break;
 		case 2:
 			Boolean flag= deleteOrder(
 						request.getParameter("orderId")
 					 );
-			 if(flag) jsonObject.put("result", "true");
-			 else jsonObject.put("result", "false");
+			 if(flag) jsonObject.put("result", "1");
+			 else jsonObject.put("result", "0");
 			break;
 		case 3:
 			break;

@@ -69,19 +69,19 @@ public class ProcessFavorite extends HttpServlet {
 					request.getParameter("userId"), 
 					request.getParameter("restaurantId"), 
 					request.getParameter("restaurantName"), 
-					request.getParameter("restauRantAddess"),
+					request.getParameter("restaurantAddress"),
 					request.getParameter("restaurantPhone")
 							);
-					if(flag) jsonObject.put("result", "0");
+					if(flag) jsonObject.put("result", "1");
 					else {
-						jsonObject.put("result", "1");
+						jsonObject.put("result", "0");
 					}
 			break;
 		case 2:
 			Boolean flagBoolean = deleteFavorite(request.getParameter("favoriteId"));
-			if(flagBoolean) jsonObject.put("result", "0");
+			if(flagBoolean) jsonObject.put("result", "1");
 			else {
-				jsonObject.put("result", "1");
+				jsonObject.put("result", "0");
 			}
 			break;
 		case 3:
@@ -120,7 +120,9 @@ public class ProcessFavorite extends HttpServlet {
 				 restaurantName==null||
 				 restaurantPhone==null
 				 )
-			 return new Boolean(false);
+			{
+			 	return new Boolean(false);
+			}
 		 User user =new User(Integer.parseInt(userId));
 		 Restaurant restaurant  =new Restaurant(restaurantId, restaurantName, restauRantAddess, restaurantPhone);
 		 FavoriteDao dao  = new FavoriteDao();
