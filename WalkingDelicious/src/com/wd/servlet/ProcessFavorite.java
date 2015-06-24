@@ -105,7 +105,7 @@ public class ProcessFavorite extends HttpServlet {
 		if (value==null) {
 			return new ArrayList<Favorite>();
 		}
-		return new FavoriteDao().getFavoritesByUserId(Integer.parseInt(value));
+		return new FavoriteDao().getFavoritesByUserId(value);
 	}
 	 public Boolean deleteFavorite(String userName,String restaurantId){
 		 if(userName==null) return new Boolean(false);

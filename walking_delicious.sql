@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : admin
-Source Server Version : 50616
+Source Server         : walking_delicious
+Source Server Version : 50614
 Source Host           : localhost:3306
 Source Database       : walking_delicious
 
 Target Server Type    : MYSQL
-Target Server Version : 50616
+Target Server Version : 50614
 File Encoding         : 65001
 
-Date: 2015-06-19 13:58:26
+Date: 2015-06-24 13:01:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,20 +20,20 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_favorite`;
 CREATE TABLE `t_favorite` (
-  `id` int(32) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(32) unsigned NOT NULL,
+  `id` int(32) NOT NULL,
+  `user_id` varchar(12) NOT NULL,
   `restaurant_id` char(32) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `f_user_id_fk` (`user_id`),
-  KEY `f_restaurant_id_fk` (`restaurant_id`),
-  CONSTRAINT `f_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `f_restaurant_id_fk` FOREIGN KEY (`restaurant_id`) REFERENCES `t_restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  KEY `user_id_w` (`user_id`),
+  KEY `restaurant_w` (`restaurant_id`),
+  CONSTRAINT `restaurant_w` FOREIGN KEY (`restaurant_id`) REFERENCES `t_restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_id_w` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_favorite
 -- ----------------------------
-INSERT INTO `t_favorite` VALUES ('1', '1', '1');
+INSERT INTO `t_favorite` VALUES ('1', 'a111111', '1');
 
 -- ----------------------------
 -- Table structure for `t_order`
@@ -83,7 +83,8 @@ CREATE TABLE `t_user` (
   `id` int(32) unsigned NOT NULL AUTO_INCREMENT COMMENT '表中数据的ID',
   `username` varchar(12) NOT NULL COMMENT '用户名',
   `password` varchar(12) NOT NULL COMMENT '密码',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------

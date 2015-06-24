@@ -29,7 +29,7 @@ public class FavoriteDao {
 	public FavoriteDao() {
 	}
 	
-	private List<Favorite> getFavoritesByEachId(String field,Integer value){
+	private List<Favorite> getFavoritesByEachId(String field,String value){
 		List<Favorite> ret= new ArrayList<Favorite>();
 		if(value==null) return ret;
 		try {
@@ -52,11 +52,11 @@ public class FavoriteDao {
 		return ret;
 	}
 	
-	public List<Favorite> getFavoritesByUserId(Integer userId){
+	public List<Favorite> getFavoritesByUserId(String userId){
 		return getFavoritesByEachId(USER_ID_TABLE, userId);
 	}
 	
-	public List<Favorite> getFavoritesById(Integer value){
+	public List<Favorite> getFavoritesById(String value){
 		return getFavoritesByEachId(ID_TABLE, value);
 	}
 	
