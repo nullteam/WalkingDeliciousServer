@@ -30,27 +30,32 @@ public class OrderDao {
 	public OrderDao() {
 	}
 	//select order
-	public Order getOrderById(Integer value){
-		Order retOrder =null;
-		if (value==null) {
-			return retOrder;
-		}
-		List<Order> orders= getOrderByEachId(ID_TABLE, value);
-		if (orders.isEmpty()) {
-			return retOrder;
-		}
-		retOrder = orders.get(0);
-		return retOrder;
-	}
-
-	public List<Order> getOrderByUserId(Integer value){
-		if(value==null) return new ArrayList<Order>();
-		return getOrderByEachId(USER_ID_TABLE, value);
+//	public Order getOrderById(Integer value){
+//		Order retOrder =null;
+//		if (value==null) {
+//			return retOrder;
+//		}
+//		List<Order> orders= getOrderByEachId(ID_TABLE, value);
+//		if (orders.isEmpty()) {
+//			return retOrder;
+//		}
+//		retOrder = orders.get(0);
+//		return retOrder;
+//	}
+//
+//	public List<Order> getOrderByUserId(Integer value){
+//		if(value==null) return new ArrayList<Order>();
+//		return getOrderByEachId(USER_ID_TABLE, value);
+//	}
+	
+	public List<Order> getOrderByUserId(String userId){
+		if(userId==null) return new ArrayList<Order>();
+		return getOrderByEachId(USER_ID_TABLE, userId);
 	}
 	
-	public List<Order> getOrderByUser(User user){
-		return getOrderByUserId(user.getId());
-	}
+//	public List<Order> getOrderByUser(User user){
+//		return getOrderByUserId(user.getId());
+//	}
 		
 	//delete order
 	
@@ -58,10 +63,10 @@ public class OrderDao {
 		return deleteOrderByEachId(ID_TABLE, value);
 	}
 	
-	public Boolean deleteOrder(Order order){
-		if(order==null) return new Boolean(false);
-		return deleteOrderById(order.getId());
-	}
+//	public Boolean deleteOrder(Order order){
+//		if(order==null) return new Boolean(false);
+//		return deleteOrderById(order.getId());
+//	}
 	
 	public Boolean deleteOrderByUserId(Integer value){
 		return deleteOrderByEachId(USER_ID_TABLE, value);
@@ -79,12 +84,12 @@ public class OrderDao {
 		if(order==null) return flag;
 		try {
 			RestaurantDao dao = new RestaurantDao();
-			Restaurant restaurant = dao.getRestaurant(order.getRestaurant());
-			if(restaurant==null) dao.addRestaurant(order.getRestaurant());
+			Restaurant restaurant = dao.getRestaurant(order.getRestaurantId());
+			if(restaurant==null) dao.addRestaurant(new Restaurant(order.getRestaurantId(),order.getRestaurantName(),order.getRestaurantAddress(),order.getRestaurantPhone()));
 			PreparedStatement ps =DBUtil.getInstance().getConnection().prepareStatement(ORDER_ADD_STRING);
-			ps.setInt(1, order.getUserId());
-			ps.setString(2, order.getRestaurantId());
-			ps.setInt(3, order.getOrderNum());
+			ps.setString(1, order.getUserId());
+			ps.setString(2,order.getRestaurantId());
+			ps.setInt(3,order.getOrderNum());
 			int result = -1; 
 			result = ps.executeUpdate();
 			flag = result>0?true:false;
@@ -114,7 +119,7 @@ public class OrderDao {
 	}
 	
 	
-	private List<Order> getOrderByEachId(String field,Integer value){
+	private List<Order> getOrderByEachId(String field,String value){
 		List<Order> retOrder = new ArrayList<Order>();
 		if(value==null) return retOrder;
 		try {
@@ -123,13 +128,14 @@ public class OrderDao {
 			PreparedStatement ps = DBUtil.getInstance().getConnection().prepareStatement(assembling.toString());
 			ResultSet set =ps.executeQuery();
 			while(set.next()){
-				Integer userInteger = set.getInt(USER_ID_TABLE);
+				String userInteger = set.getString(USER_ID_TABLE);
 				String restaurantInteger = set.getString(RESTAURANT_ID_TABLE);
 				UserDao dao =new UserDao();
-				User user = dao.getUserById(userInteger);
+				User user = dao.getUserByName(userInteger);
 				RestaurantDao restaurantDao = new RestaurantDao();
 				Restaurant restaurant=restaurantDao.getRestaurantById(restaurantInteger);
-				retOrder.add(new Order(set.getInt(ID_TABLE),user,restaurant,set.getInt(ORDER_NUM_TABLE),set.getTimestamp(ORDER_TIME_TABLE)));
+				retOrder.add(new Order(value, restaurant.getId(), restaurant.getRestaurantName(), restaurant.getRestaurantAddress(), 
+						restaurant.getRestaurantPhone(),set.getInt("order_num"),set.getTimestamp("order_time").toString()));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

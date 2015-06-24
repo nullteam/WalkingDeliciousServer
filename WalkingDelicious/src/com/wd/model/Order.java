@@ -3,150 +3,79 @@ package com.wd.model;
 import java.sql.Timestamp;
 
 public class Order {
-	private Integer id;
-	private User user;
-	private Restaurant restaurant;
+	private String userId;
+	private String restaurantId;
+	private String restaurantName;
+	private String restaurantAddress;
+	private String restaurantPhone;
 	private Integer orderNum;
-	private Timestamp orderTime;
-
-	public Order() {
-	}
+//	private Timestamp orderTime;
+	private String orderTime;
 	
-	public Order(Integer id,Integer userId,String restaurantId,Integer num){
-		this.id = id;
-		this.user =new User(userId,"","");
-		this.restaurant = new Restaurant(restaurantId,"","","");
-		this.orderNum=num;	
-	}
-	public Order(Integer id,Integer userId,String restaurantId,Integer num,Timestamp time){
-		this.id = id;
-		this.user =new User(userId,"","");
-		this.restaurant = new Restaurant(restaurantId,"","","");
-		this.orderNum=num;
-		this.orderTime = time;
-	}
-	
-	public Order(Integer id,Integer userId,String restaurantId,Integer num,String time){
-		this.id = id;
-		this.user =new User(userId,"","");
-		this.restaurant = new Restaurant(restaurantId,"","","");
-		this.orderNum=num;
-		this.orderTime = new Timestamp(Integer.parseInt(time));
-	}
-	
-	public Order(Integer userId,String restaurantId,Integer num){
-		this.user =new User(userId,"","");
-		this.restaurant = new Restaurant(restaurantId,"","","");
-		this.orderNum=num;
-	}
-	
-	public Order(Integer userId,String restaurantId,Integer num,Timestamp time){
-		this.user =new User(userId,"","");
-		this.restaurant = new Restaurant(restaurantId,"","","");
-		this.orderNum=num;
-		this.orderTime = time;
-	}
-	
-	public Order(Integer userId,String restaurantId,Integer num,String time){
-		this.user =new User(userId,"","");
-		this.restaurant = new Restaurant(restaurantId,"","","");
-		this.orderNum=num;
-		this.orderTime = new Timestamp(Integer.parseInt(time));
-	}
-	
-	public Order(Integer id,User user,Restaurant restaurant,Integer num,Timestamp time){
-		this.id = id;
-		this.user = user;
-		this.restaurant=restaurant;
-		this.orderNum=num;
-		this.orderTime=time;
-	}
-
-	public Order(Integer userId,Restaurant restaurant,Integer num){
-		this.user = new User(userId,"","");
-		this.restaurant = restaurant;
-		this.orderNum =num;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * @return the user
-	 */
-	public User getUser() {
-		return user;
-	}
-
-
-
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-
-
-	/**
-	 * @return the restaurant
-	 */
-	public Restaurant getRestaurant() {
-		return restaurant;
-	}
-
-
-
-	/**
-	 * @param restaurant the restaurant to set
-	 */
-	public void setRestaurant(Restaurant restaurant) {
-		this.restaurant = restaurant;
-	}
-
-
-
-	/**
-	 * @return the orderNum
-	 */
-	public Integer getOrderNum() {
-		return orderNum;
-	}
-
-
-
-	/**
-	 * @param orderNum the orderNum to set
-	 */
-	public void setOrderNum(Integer orderNum) {
+	public Order(String userId, String restaurantId, String restaurantName,
+			String restaurantAddress, String restaurantPhone, Integer orderNum) {
+		this.userId = userId;
+		this.restaurantId = restaurantId;
+		this.restaurantName = restaurantName;
+		this.restaurantAddress = restaurantAddress;
+		this.restaurantPhone = restaurantPhone;
 		this.orderNum = orderNum;
 	}
 	
-	/**
-	 * @return the orderTime
-	 */
-	public Timestamp getOrderTime() {
+	public Order(String userId, String restaurantId, String restaurantName,
+			String restaurantAddress, String restaurantPhone, Integer orderNum,
+			String orderTime) {
+		this.userId = userId;
+		this.restaurantId = restaurantId;
+		this.restaurantName = restaurantName;
+		this.restaurantAddress = restaurantAddress;
+		this.restaurantPhone = restaurantPhone;
+		this.orderNum = orderNum;
+		this.orderTime = orderTime;
+	}
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getRestaurantId() {
+		return restaurantId;
+	}
+	public void setRestaurantId(String restaurantId) {
+		this.restaurantId = restaurantId;
+	}
+	public String getRestaurantName() {
+		return restaurantName;
+	}
+	public void setRestaurantName(String restaurantName) {
+		this.restaurantName = restaurantName;
+	}
+	public String getRestaurantAddress() {
+		return restaurantAddress;
+	}
+	public void setRestaurantAddress(String restaurantAddress) {
+		this.restaurantAddress = restaurantAddress;
+	}
+	public String getRestaurantPhone() {
+		return restaurantPhone;
+	}
+	public void setRestaurantPhone(String restaurantPhone) {
+		this.restaurantPhone = restaurantPhone;
+	}
+	public Integer getOrderNum() {
+		return orderNum;
+	}
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
+	}
+	public String getOrderTime() {
 		return orderTime;
 	}
-
-	/**
-	 * @param orderTime the orderTime to set
-	 */
-	public void setOrderTime(Timestamp orderTime) {
+	public void setOrderTime(String orderTime) {
 		this.orderTime = orderTime;
 	}
 
-	public Integer getUserId() {
-		return this.user.getId();
-	}
 	
-	public String getRestaurantId() {
-		return this.restaurant.getId();
-	}
-
 }

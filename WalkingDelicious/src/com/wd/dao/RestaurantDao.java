@@ -50,6 +50,10 @@ public class RestaurantDao {
 		return getRestaurantById(value.getId());
 	}
 	
+	public Restaurant getRestaurant(String restaurantId) {
+		return getRestaurantById(restaurantId);
+	}
+	
 	//add restaurant
 	public Boolean addRestaurant(Restaurant value){
 		Boolean flag=false;

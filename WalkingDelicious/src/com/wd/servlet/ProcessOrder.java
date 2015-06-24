@@ -128,7 +128,7 @@ public class ProcessOrder extends HttpServlet {
 		) return flag;
 		OrderDao dao = new OrderDao();
 		Restaurant restaurant = new Restaurant(restaurantId, name, address, phone);
-		Order order  = new Order(Integer.parseInt(userId),restaurant,Integer.parseInt(orderNum));
+		Order order  = new Order(userId, restaurantId, name, address, phone, Integer.parseInt(orderNum));
 		flag=dao.addOrder(order);
 		return flag;
 	}
@@ -142,6 +142,6 @@ public class ProcessOrder extends HttpServlet {
 	
 	public List<Order> queryOrder(String userId) {
 		if(userId==null) return new ArrayList<Order>();
-		return new OrderDao().getOrderByUserId(Integer.parseInt(userId));
+		return new OrderDao().getOrderByUserId(userId);
 	}
 }

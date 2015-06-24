@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : walking_delicious
-Source Server Version : 50614
+Source Server         : mysql
+Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : walking_delicious
 
 Target Server Type    : MYSQL
-Target Server Version : 50614
+Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-06-24 13:01:09
+Date: 2015-06-24 14:38:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,21 +40,24 @@ INSERT INTO `t_favorite` VALUES ('1', 'a111111', '1');
 -- ----------------------------
 DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order` (
-  `id` int(32) unsigned NOT NULL AUTO_INCREMENT COMMENT '数据项的id',
-  `user_id` int(32) unsigned NOT NULL COMMENT '用户的id关联到t_user表中',
-  `restaurant_id` char(32) NOT NULL COMMENT '餐馆的id关联到t_restaurant表中',
-  `order_num` int(32) unsigned NOT NULL COMMENT '订单的数量',
-  `order_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT '订单的时间，根据数据库时间更新',
+  `id` int(32) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(12) NOT NULL,
+  `restaurant_id` char(32) NOT NULL,
+  `order_num` int(32) NOT NULL,
+  `order_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `restaurant_id` (`restaurant_id`),
-  CONSTRAINT `t_order_ibfk_2` FOREIGN KEY (`restaurant_id`) REFERENCES `t_restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `t_order_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `t_order_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `t_order_ibfk_2` FOREIGN KEY (`restaurant_id`) REFERENCES `t_restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_order
 -- ----------------------------
+INSERT INTO `t_order` VALUES ('00000000000000000000000000000001', 'a111111', 'baaaa23456', '3', '2015-06-24 14:27:02');
+INSERT INTO `t_order` VALUES ('00000000000000000000000000000002', 'a111111', 'baaaa23456', '3', '2015-06-24 14:37:25');
+INSERT INTO `t_order` VALUES ('00000000000000000000000000000003', 'a111111', 'baaaa2343336', '3', '2015-06-24 14:37:48');
 
 -- ----------------------------
 -- Table structure for `t_restaurant`
@@ -74,6 +77,8 @@ CREATE TABLE `t_restaurant` (
 -- ----------------------------
 INSERT INTO `t_restaurant` VALUES ('', 'dfgdfg', 'jgj', 'dgwer');
 INSERT INTO `t_restaurant` VALUES ('1', 'sfd', 'erger', 'dfgdfg');
+INSERT INTO `t_restaurant` VALUES ('baaaa2343336', 'KFC', 'KFC', '18202720293');
+INSERT INTO `t_restaurant` VALUES ('baaaa23456', 'KFC', 'KFC', '18202720293');
 
 -- ----------------------------
 -- Table structure for `t_user`
