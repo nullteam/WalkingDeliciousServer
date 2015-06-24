@@ -19,9 +19,8 @@ public class FavoriteDao {
 	private final String ID_TABLE = "id";
 	private final String USER_ID_TABLE = "user_id";
 	private final String RESTAURANT_ID_TABLE = "restaurant_id";
-	
 	private final String FAVORITE_ADD_STRRING = "INSERT INTO "+FAVORITE_TABLE_NAME+" VALUES(NULL,?,?)";
-	private final String FAVORITE_DELETE_STRING = "DELETE * FROM "+FAVORITE_TABLE_NAME+" WHERE 1=1";
+	private final String FAVORITE_DELETE_STRING = "DELETE FROM "+FAVORITE_TABLE_NAME+" WHERE "+USER_ID_TABLE+"=? AND "+RESTAURANT_ID_TABLE+"=?";
 	private final String FAVORITE_SELECT_STRING = "SELECT * FROM "+FAVORITE_TABLE_NAME+" WHERE 1=1";
 	
 	
@@ -61,15 +60,15 @@ public class FavoriteDao {
 		return getFavoritesByEachId(ID_TABLE, value);
 	}
 	
-	public Boolean deleteFavoriteById(Integer value){
+	public Boolean deleteFavoriteById(String userName,String restaurantId){
 		Boolean flag = false;
-		if(value==null) return flag;
+		if(userName==null||restaurantId==null) return flag;
 		try {
-			SqlAssembling assembling = new SqlAssembling(FAVORITE_DELETE_STRING);
-			assembling.addRestriction(ID_TABLE, value);
-			
+			 PreparedStatement ps = DBUtil.getInstance().getConnection().prepareStatement(FAVORITE_DELETE_STRING);
+			 ps.setString(1, userName);
+			 ps.setString(2, restaurantId);
 			int result=-1;
-			result = DBUtil.getInstance().getConnection().prepareStatement(assembling.toString()).executeUpdate();
+			result = ps.executeUpdate();
 			flag = result>0?true:false;
 		} catch (SQLException e) {
 			e.printStackTrace();

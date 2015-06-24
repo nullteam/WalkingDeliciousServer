@@ -78,7 +78,7 @@ public class ProcessFavorite extends HttpServlet {
 					}
 			break;
 		case 2:
-			Boolean flagBoolean = deleteFavorite(request.getParameter("favoriteId"));
+			Boolean flagBoolean = deleteFavorite(request.getParameter("userName"),request.getParameter("restaurantId"));
 			if(flagBoolean) jsonObject.put("result", "1");
 			else {
 				jsonObject.put("result", "0");
@@ -107,9 +107,9 @@ public class ProcessFavorite extends HttpServlet {
 		}
 		return new FavoriteDao().getFavoritesByUserId(Integer.parseInt(value));
 	}
-	 public Boolean deleteFavorite(String value){
-		 if(value==null) return new Boolean(false);
-		 return new FavoriteDao().deleteFavoriteById(Integer.parseInt(value));
+	 public Boolean deleteFavorite(String userName,String restaurantId){
+		 if(userName==null) return new Boolean(false);
+		 return new FavoriteDao().deleteFavoriteById(userName,restaurantId);
 	 }
 	 
 	 public Boolean addFavorite(String userId,String restaurantId,String restaurantName,String restauRantAddess,String restaurantPhone){
