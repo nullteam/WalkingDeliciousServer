@@ -57,7 +57,7 @@
     </context-param>
     <context-param>
         <param-name>dbPassword</param-name>
-        <param-value>zengli19940726</param-value>
+        <param-value>root</param-value>
     </context-param>
     <context-param>
         <param-name>tableUser</param-name>
