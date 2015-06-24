@@ -19,7 +19,8 @@ public class FavoriteDao {
 	private final String USER_ID_TABLE = "user_id";
 	private final String RESTAURANT_ID_TABLE = "restaurant_id";
 	private final String FAVORITE_ADD_STRRING = "INSERT INTO "
-			+ FAVORITE_TABLE_NAME+"("+USER_ID_TABLE+","+RESTAURANT_ID_TABLE+")" + " VALUES(?,?)";
+			+ FAVORITE_TABLE_NAME + "(" + USER_ID_TABLE + ","
+			+ RESTAURANT_ID_TABLE + ")" + " VALUES(?,?)";
 	private final String FAVORITE_DELETE_STRING = "DELETE FROM "
 			+ FAVORITE_TABLE_NAME + " WHERE " + USER_ID_TABLE + "=? AND "
 			+ RESTAURANT_ID_TABLE + "=?";
@@ -84,9 +85,9 @@ public class FavoriteDao {
 		return flag;
 	}
 
-	public Boolean addFavorite(Restaurant restaurant,String userId) {
+	public Boolean addFavorite(Restaurant restaurant, String userId) {
 		Boolean flag = false;
-		if (restaurant == null||userId==null)
+		if (restaurant == null || userId == null)
 			return flag;
 		try {
 
@@ -99,7 +100,11 @@ public class FavoriteDao {
 			ps.setString(2, restaurant.getId());
 
 			int result = -1;
-			result = ps.executeUpdate();
+			if (queryIsLiked(userId, restaurant.getId()) == 1) {
+				result = -1;
+			} else {
+				result = ps.executeUpdate();
+			}
 			flag = result > 0 ? true : false;
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50614
 File Encoding         : 65001
 
-Date: 2015-06-24 14:51:18
+Date: 2015-06-24 15:07:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,12 +28,13 @@ CREATE TABLE `t_favorite` (
   KEY `restaurant_w` (`restaurant_id`),
   CONSTRAINT `restaurant_w` FOREIGN KEY (`restaurant_id`) REFERENCES `t_restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_id_w` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_favorite
 -- ----------------------------
 INSERT INTO `t_favorite` VALUES ('00000000000000000000000000000001', 'a111111', '1');
+INSERT INTO `t_favorite` VALUES ('00000000000000000000000000000024', 'a111111', '4');
 
 -- ----------------------------
 -- Table structure for `t_order`
@@ -77,6 +78,7 @@ CREATE TABLE `t_restaurant` (
 -- ----------------------------
 INSERT INTO `t_restaurant` VALUES ('', 'dfgdfg', 'jgj', 'dgwer');
 INSERT INTO `t_restaurant` VALUES ('1', 'sfd', 'erger', 'dfgdfg');
+INSERT INTO `t_restaurant` VALUES ('4', 'avcx', 'aaaaaa', '123333333333');
 INSERT INTO `t_restaurant` VALUES ('baaaa2343336', 'KFC', 'KFC', '18202720293');
 INSERT INTO `t_restaurant` VALUES ('baaaa23456', 'KFC', 'KFC', '18202720293');
 
