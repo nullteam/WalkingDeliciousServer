@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : mysql
-Source Server Version : 50528
+Source Server         : walking_delicious
+Source Server Version : 50614
 Source Host           : localhost:3306
 Source Database       : walking_delicious
 
 Target Server Type    : MYSQL
-Target Server Version : 50528
+Target Server Version : 50614
 File Encoding         : 65001
 
-Date: 2015-06-24 14:38:57
+Date: 2015-06-24 14:51:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_favorite`;
 CREATE TABLE `t_favorite` (
-  `id` int(32) NOT NULL,
+  `id` int(32) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `user_id` varchar(12) NOT NULL,
   `restaurant_id` char(32) NOT NULL,
   PRIMARY KEY (`id`),
@@ -28,12 +28,12 @@ CREATE TABLE `t_favorite` (
   KEY `restaurant_w` (`restaurant_id`),
   CONSTRAINT `restaurant_w` FOREIGN KEY (`restaurant_id`) REFERENCES `t_restaurant` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_id_w` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_favorite
 -- ----------------------------
-INSERT INTO `t_favorite` VALUES ('1', 'a111111', '1');
+INSERT INTO `t_favorite` VALUES ('00000000000000000000000000000001', 'a111111', '1');
 
 -- ----------------------------
 -- Table structure for `t_order`
