@@ -46,6 +46,22 @@ public class UserDao {
 		}
 		return retUser;
 	}
+	public User getUserByName(String userName) {
+		User user = null;
+		try {
+			String sqlString = "SELECT * FROM "+USER_TABLE_NAME+" WHERE "+USERNAME_TABLE+"=?";
+			PreparedStatement ps = DBUtil.getInstance().getConnection().prepareStatement(sqlString);
+			ps.setString(1, userName);
+		 	ResultSet ret  = ps.executeQuery();
+			if(ret.next()){
+				user = new User(ret.getInt(ID_TABLE),ret.getString(USERNAME_TABLE), ret.getString(PASSWORD_TABLE));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("create PreparedStatement failed!!!");
+		}
+		return user;
+	}
 	//添加用户
 	public Boolean addUser(User user){
 		Boolean flag=false;
