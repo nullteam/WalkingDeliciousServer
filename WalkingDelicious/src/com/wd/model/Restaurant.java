@@ -6,7 +6,36 @@ public class Restaurant {
 	private String		restaurantName;
 	private String 		restaurantAddress;
 	private String		restaurantPhone;
+	private String		imgUrl;
+	private double		price;
+	
 	public Restaurant() {
+	}
+	
+	public Restaurant(String id, String restaurantName,
+			String restaurantAddress, String restaurantPhone, String imgUrl,
+			double price) {
+		this.id = id;
+		this.restaurantName = restaurantName;
+		this.restaurantAddress = restaurantAddress;
+		this.restaurantPhone = restaurantPhone;
+		this.imgUrl = imgUrl;
+		this.price = price;
+	}
+
+
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	public Restaurant(String id){
 		this.id=id;

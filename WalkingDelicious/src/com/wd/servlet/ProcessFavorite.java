@@ -104,13 +104,8 @@ public class ProcessFavorite extends HttpServlet {
 			jsonObject.put("result", result);
 			break;
 		case 4:
-			JSONArray ja = new JSONArray();
-			List<Favorite> favorites = queryFavorites(request
-					.getParameter("userId"));
-			for (Favorite favorite : favorites) {
-				Restaurant res = favorite.getRestaurant();
-				ja.add(res);
-			}
+			JSONArray ja =  JSONArray.fromObject(queryFavorites(request
+					.getParameter("userId")));
 			jsonObject.put("result", ja);
 			break;
 		default:
@@ -132,9 +127,9 @@ public class ProcessFavorite extends HttpServlet {
 		return result;
 	}
 
-	public List<Favorite> queryFavorites(String value) {
+	public List<JSONObject> queryFavorites(String value) {
 		if (value == null) {
-			return new ArrayList<Favorite>();
+			return new ArrayList<JSONObject>();
 		}
 		return new FavoriteDao().getFavoritesByUserId(value);
 	}
@@ -149,9 +144,11 @@ public class ProcessFavorite extends HttpServlet {
 			String restaurantName, String restauRantAddess,
 			String restaurantPhone) {
 		if (userId == null || restaurantId == null || restauRantAddess == null
-				|| restaurantName == null || restaurantPhone == null) {
+				|| restaurantName == null) {
 			return false;
 		}
+		if(restaurantPhone==null)
+			restaurantPhone="unKnown";
 		// User user =new User(Integer.parseInt(userId));
 		Restaurant restaurant = new Restaurant(restaurantId, restaurantName,
 				restauRantAddess, restaurantPhone);

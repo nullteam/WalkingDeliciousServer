@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.json.JSONObject;
+
 import com.wd.model.Favorite;
 import com.wd.model.Restaurant;
 import com.wd.model.User;
@@ -32,38 +34,40 @@ public class FavoriteDao {
 	public FavoriteDao() {
 	}
 
-	private List<Favorite> getFavoritesByEachId(String field, String value) {
-		List<Favorite> ret = new ArrayList<Favorite>();
+	private List<JSONObject> getFavoritesByEachId(String field, String value) {
+		List<JSONObject> jsonArray = new ArrayList<JSONObject>();
+		String userId = value;
 		if (value == null)
-			return ret;
+			return jsonArray;
 		try {
 			SqlAssembling assembling = new SqlAssembling(FAVORITE_SELECT_STRING);
 			assembling.addRestriction(field, value);
 			ResultSet set = DBUtil.getInstance().getConnection()
 					.prepareStatement(assembling.toString()).executeQuery();
+			JSONObject js;
 			while (set.next()) {
-				UserDao userDao = new UserDao();
-				User user = userDao.getUserByName(value);
+				js = new JSONObject();
 				String restaurantIdString = set.getString(RESTAURANT_ID_TABLE);
 				RestaurantDao restaurantDao = new RestaurantDao();
 				Restaurant restaurant = restaurantDao
 						.getRestaurantById(restaurantIdString);
-				ret.add(new Favorite(set.getInt(ID_TABLE), user, restaurant));
+				js.put("id", restaurant.getId());
+				js.put("restaurantName", restaurant.getRestaurantName());
+				js.put("restaurantAddress", restaurant.getRestaurantAddress());
+				js.put("restaurantPhone", restaurant.getRestaurantPhone());
+				jsonArray.add(js);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("create PreparedStatement failed!!!");
 		}
-		return ret;
+		return jsonArray;
 	}
 
-	public List<Favorite> getFavoritesByUserId(String userId) {
+	public List<JSONObject> getFavoritesByUserId(String userId) {
 		return getFavoritesByEachId(USER_ID_TABLE, userId);
 	}
 
-	public List<Favorite> getFavoritesById(String value) {
-		return getFavoritesByEachId(ID_TABLE, value);
-	}
 
 	public Boolean deleteFavoriteById(String userName, String restaurantId) {
 		Boolean flag = false;

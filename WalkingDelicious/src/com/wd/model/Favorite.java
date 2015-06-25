@@ -1,56 +1,50 @@
 package com.wd.model;
 
 public class Favorite {
-
+	
 	private Integer id;
-	private User user;
-	private Restaurant restaurant;
+	private String user_id;
+	private String restaurant_id;
 
-	public Favorite(Integer id,User user,Restaurant restaurant){
-		this.id=id;
-		this.user=user;
-		this.restaurant=restaurant;
-	}
 	
-	public Favorite(Integer id,Integer userId,String restaurantId){
-		this.id=id;
-		this.user=new User(userId);
-		this.restaurant = new Restaurant(restaurantId);
+
+	public Favorite( String user_id, String restaurant_id) {
+		this.user_id = user_id;
+		this.restaurant_id = restaurant_id;
 	}
+
 	
-	public Favorite(User user,Restaurant restaurant){
-		this.user=user;
-		this.restaurant=restaurant;
+
+	public String getUser_id() {
+		return user_id;
 	}
-	
-	public Favorite(Integer userId,String restaurantId){
-		this.user=new User(userId);
-		this.restaurant = new Restaurant(restaurantId);
+
+
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
-	/**
-	 * @return the user
-	 */
-	public User getUser() {
-		return user;
+
+
+
+	public String getRestaurant_id() {
+		return restaurant_id;
 	}
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(User user) {
-		this.user = user;
+
+
+
+	public void setRestaurant_id(String restaurant_id) {
+		this.restaurant_id = restaurant_id;
 	}
-	/**
-	 * @return the restaurant
-	 */
-	public Restaurant getRestaurant() {
-		return restaurant;
+
+
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	/**
-	 * @param restaurant the restaurant to set
-	 */
-	public void setRestaurant(Restaurant restaurant) {
-		this.restaurant = restaurant;
-	}
+
+
+
 	/**
 	 * @return the id
 	 */
