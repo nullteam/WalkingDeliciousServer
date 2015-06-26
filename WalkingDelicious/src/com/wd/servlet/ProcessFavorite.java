@@ -3,7 +3,6 @@ package com.wd.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wd.dao.FavoriteDao;
-import com.wd.model.Favorite;
 import com.wd.model.Restaurant;
-import com.wd.model.User;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -80,7 +77,10 @@ public class ProcessFavorite extends HttpServlet {
 					request.getParameter("restaurantId"),
 					request.getParameter("restaurantName"),
 					request.getParameter("restaurantAddress"),
-					request.getParameter("restaurantPhone"));
+					request.getParameter("restaurantPhone"),
+					request.getParameter("imgUrl"),
+					request.getParameter("price")
+					);
 			if (flag)
 				jsonObject.put("result", "1");
 			else {
@@ -142,16 +142,18 @@ public class ProcessFavorite extends HttpServlet {
 
 	public Boolean addFavorite(String userId, String restaurantId,
 			String restaurantName, String restauRantAddess,
-			String restaurantPhone) {
+			String restaurantPhone,String url,String price) {
 		if (userId == null || restaurantId == null || restauRantAddess == null
 				|| restaurantName == null) {
 			return false;
 		}
 		if(restaurantPhone==null)
 			restaurantPhone="unKnown";
+		if(url==null) url="";
+		if(price==null) price ="0.00";
 		// User user =new User(Integer.parseInt(userId));
 		Restaurant restaurant = new Restaurant(restaurantId, restaurantName,
-				restauRantAddess, restaurantPhone);
+				restauRantAddess, restaurantPhone,url,Double.parseDouble(price));
 		FavoriteDao dao = new FavoriteDao();
 		return dao.addFavorite(restaurant, userId);
 	}

@@ -6,11 +6,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.json.JSONObject;
+
 import com.wd.model.Order;
 import com.wd.model.Restaurant;
 import com.wd.model.User;
 import com.wd.util.DBUtil;
 import com.wd.util.SqlAssembling;
+
 
 
 public class OrderDao {
@@ -20,11 +23,11 @@ public class OrderDao {
 	private final String ID_TABLE="id";
 	private final String USER_ID_TABLE = "user_id";
 	private final String RESTAURANT_ID_TABLE ="restaurant_id";
-	private final String ORDER_NUM_TABLE = "order_num";
-	private final String ORDER_TIME_TABLE = "order_time";
+	//private final String ORDER_NUM_TABLE = "order_num";
+	//private final String ORDER_TIME_TABLE = "order_time";
 	//CRUD常用操作的SQL语句模板
 	private final String ORDER_ADD_STRING	 = "INSERT INTO "+ORDER_TABLE_NAME+" VALUES(NULL,?,?,?,NULL)";
-	private final String ORDER_DELETE_STRING = "DELETE * FROM "+ORDER_TABLE_NAME+" WHERE 1=1";
+	private final String ORDER_DELETE_STRING = "DELETE FROM "+ORDER_TABLE_NAME+" WHERE 1=1";
 	//private final String ORDER_UPDATE_STRING  ="UPDATE "+ORDER_TABLE_NAME+" SET "+USER_ID_TABLE+"=?,"+RESTAURANT_ID_TABLE+"=? WHERE "+ID_TABLE+"=?";
 	private final String ORDER_SELECT_STRING ="SELECT * FROM "+ORDER_TABLE_NAME+" WHERE 1=1";
 	public OrderDao() {
@@ -79,13 +82,13 @@ public class OrderDao {
 	
 	
 	//add order
-	public Boolean addOrder(Order order){
+	public Boolean addOrder(Restaurant restaurant,Order order){
 		Boolean flag = false;
 		if(order==null) return flag;
 		try {
 			RestaurantDao dao = new RestaurantDao();
-			Restaurant restaurant = dao.getRestaurant(order.getRestaurantId());
-			if(restaurant==null) dao.addRestaurant(new Restaurant(order.getRestaurantId(),order.getRestaurantName(),order.getRestaurantAddress(),order.getRestaurantPhone()));
+			restaurant = dao.getRestaurant(order.getRestaurantId());
+			if(restaurant==null) dao.addRestaurant(restaurant);
 			PreparedStatement ps =DBUtil.getInstance().getConnection().prepareStatement(ORDER_ADD_STRING);
 			ps.setString(1, order.getUserId());
 			ps.setString(2,order.getRestaurantId());
@@ -134,7 +137,7 @@ public class OrderDao {
 				User user = dao.getUserByName(userInteger);
 				RestaurantDao restaurantDao = new RestaurantDao();
 				Restaurant restaurant=restaurantDao.getRestaurantById(restaurantInteger);
-				retOrder.add(new Order(value, restaurant.getId(), restaurant.getRestaurantName(), restaurant.getRestaurantAddress(), 
+				retOrder.add(new Order(set.getInt(ID_TABLE),user.getUsername(), restaurant.getId(), restaurant.getRestaurantName(), restaurant.getRestaurantAddress(), 
 						restaurant.getRestaurantPhone(),set.getInt("order_num"),set.getTimestamp("order_time").toString()));
 			}
 		} catch (SQLException e) {
@@ -142,6 +145,35 @@ public class OrderDao {
 			System.out.println("create PreparedStatement failed!!!");
 		}		
 		return retOrder;
+	}
+	
+	public List<JSONObject> getCompleteOrderByUserId(String value) {
+		List<JSONObject> jsonArray = new ArrayList<JSONObject>();
+		if (value == null)
+			return jsonArray;		
+		try {
+			String sqlString = "SELECT t_order.id AS order_id ,t_order.order_num, t_order.order_time,t_order.restaurant_id,t_restaurant.restaurant_name, t_restaurant.restaurant_address ,t_restaurant.restaurant_phone ,t_restaurant.img_url ,t_restaurant.price FROM t_order ,t_restaurant WHERE t_order.restaurant_id = t_restaurant.id";
+			PreparedStatement ps = DBUtil.getInstance().getConnection().prepareStatement(sqlString);
+			ResultSet set = ps.executeQuery();
+			JSONObject jsonObject;
+			while(set.next()){
+				jsonObject = new JSONObject();
+				jsonObject.put("orderId", set.getInt("order_id"));
+				jsonObject.put("restaurantId", set.getString("restaurant_id"));
+				jsonObject.put("orderNum", set.getInt("order_num"));
+				jsonObject.put("restaurantName", set.getString("restaurant_name"));
+				jsonObject.put("restaurantPhone", set.getString("restaurant_phone"));
+				jsonObject.put("restaurantAddress", set.getString("restaurant_address"));
+				jsonObject.put("imgUrl", set.getString("img_url")==null?"":set.getString("img_url"));
+				jsonObject.put("price", set.getDouble("price"));
+				jsonObject.put("orderTime", set.getTimestamp("order_time").getTime());
+				jsonArray.add(jsonObject);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("create PreparedStatement failed!!!");
+		}	
+		return jsonArray;
 	}
 
 }

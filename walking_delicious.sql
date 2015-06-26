@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : mysql
-Source Server Version : 50528
+Source Server         : admin
+Source Server Version : 50616
 Source Host           : localhost:3306
 Source Database       : walking_delicious
 
 Target Server Type    : MYSQL
-Target Server Version : 50528
+Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2015-06-25 11:00:20
+Date: 2015-06-26 09:51:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,6 +46,22 @@ INSERT INTO `t_favorite` VALUES ('00000000000000000000000000000052', 'a111111', 
 INSERT INTO `t_favorite` VALUES ('00000000000000000000000000000056', 'a111111', '0b92c31edf8103223617dc3b');
 
 -- ----------------------------
+-- Table structure for `t_feedback`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_feedback`;
+CREATE TABLE `t_feedback` (
+  `id` int(32) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(12) NOT NULL,
+  `content` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_feedback
+-- ----------------------------
+INSERT INTO `t_feedback` VALUES ('1', 'a111111', 'jbjbasbfkbsklbdflkbslkdgfbkergl');
+
+-- ----------------------------
 -- Table structure for `t_order`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_order`;
@@ -77,6 +93,8 @@ CREATE TABLE `t_restaurant` (
   `restaurant_name` varchar(32) DEFAULT NULL COMMENT '餐馆的名字',
   `restaurant_address` varchar(32) DEFAULT NULL,
   `restaurant_phone` varchar(32) DEFAULT NULL,
+  `img_url` varchar(32) DEFAULT NULL,
+  `price` double(32,2) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`) USING HASH
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -84,21 +102,21 @@ CREATE TABLE `t_restaurant` (
 -- ----------------------------
 -- Records of t_restaurant
 -- ----------------------------
-INSERT INTO `t_restaurant` VALUES ('baaaa2343336', 'KFC', 'KFC', '18202720293');
-INSERT INTO `t_restaurant` VALUES ('baaaa23456', 'KFC', 'KFC', '18202720293');
-INSERT INTO `t_restaurant` VALUES ('5e53af1aa0b7ce464151c0dcid', 'KFC', 'KFC', '18202720293');
-INSERT INTO `t_restaurant` VALUES ('5e53af1aa0b7ce4641521c0dcid', 'KFC肯德基', 'KFC', '18202720293');
-INSERT INTO `t_restaurant` VALUES ('5e53a2f1aa0b7ce4641521c0dcid', '肯德基', 'KFC', '18202720293');
-INSERT INTO `t_restaurant` VALUES ('07f3c8b5600e747a6240a9db', '颐和尚景酒店', '东湖新技术开发区光谷创业街66号(近华中科技大学文华学院)', '(027)59006666,(027)59723888');
-INSERT INTO `t_restaurant` VALUES ('4d35c85fa7a1b8d94254d731', '华中科技大学东校区-学生一食堂', '华中科技大学内', '');
-INSERT INTO `t_restaurant` VALUES ('531d46957fcade6503ec01de', '老村长私募菜(光谷创业街店)', '洪山区东湖新技术开发区光谷一路10号(新世界恒大华府)', '(027)87871877');
-INSERT INTO `t_restaurant` VALUES ('c8e8f6332e66fa75aa0dd8ec', '简朴菜(佳园路店)', '佳园路（近珞瑜路华中科技大学东小门）', '(027)81881998');
-INSERT INTO `t_restaurant` VALUES ('5e53a2f1aa1c0dcid', '肯德基', 'KFC', '18202720293');
-INSERT INTO `t_restaurant` VALUES ('5ea2f1aa1c0dcid', 'KFC', 'KFC', '18202720293');
-INSERT INTO `t_restaurant` VALUES ('5ea1aa1c0dcid', 'KFC', 'KFC', '18202720293');
-INSERT INTO `t_restaurant` VALUES ('2c0bd6c542eadab343ab9a7d', '武汉东鑫酒店光谷店', '珞瑜东路197号', '(027)87801969');
-INSERT INTO `t_restaurant` VALUES ('0b92c31edf8103223617dc3b', '湘鄂情(光谷店)', '武汉市洪山区关山大道111号光谷时代广场4楼(近关山街公交车站)', '(027)87597777');
-INSERT INTO `t_restaurant` VALUES ('d219bb1dcdc5bc92f40e779a', '真功夫(光谷店)', '珞喻东路佳园路中商平价2楼', '13517213310');
+INSERT INTO `t_restaurant` VALUES ('baaaa2343336', 'KFC', 'KFC', '18202720293', '234', null);
+INSERT INTO `t_restaurant` VALUES ('baaaa23456', 'KFC', 'KFC', '18202720293', '234', null);
+INSERT INTO `t_restaurant` VALUES ('5e53af1aa0b7ce464151c0dcid', 'KFC', 'KFC', '18202720293', '23', null);
+INSERT INTO `t_restaurant` VALUES ('5e53af1aa0b7ce4641521c0dcid', 'KFC肯德基', 'KFC', '18202720293', 're', null);
+INSERT INTO `t_restaurant` VALUES ('5e53a2f1aa0b7ce4641521c0dcid', '肯德基', 'KFC', '18202720293', 'er', null);
+INSERT INTO `t_restaurant` VALUES ('07f3c8b5600e747a6240a9db', '颐和尚景酒店', '东湖新技术开发区光谷创业街66号(近华中科技大学文华学院)', '(027)59006666,(027)59723888', 'er', null);
+INSERT INTO `t_restaurant` VALUES ('4d35c85fa7a1b8d94254d731', '华中科技大学东校区-学生一食堂', '华中科技大学内', '', 'er', null);
+INSERT INTO `t_restaurant` VALUES ('531d46957fcade6503ec01de', '老村长私募菜(光谷创业街店)', '洪山区东湖新技术开发区光谷一路10号(新世界恒大华府)', '(027)87871877', 'er', null);
+INSERT INTO `t_restaurant` VALUES ('c8e8f6332e66fa75aa0dd8ec', '简朴菜(佳园路店)', '佳园路（近珞瑜路华中科技大学东小门）', '(027)81881998', 'er', null);
+INSERT INTO `t_restaurant` VALUES ('5e53a2f1aa1c0dcid', '肯德基', 'KFC', '18202720293', 'er', null);
+INSERT INTO `t_restaurant` VALUES ('5ea2f1aa1c0dcid', 'KFC', 'KFC', '18202720293', 'er', null);
+INSERT INTO `t_restaurant` VALUES ('5ea1aa1c0dcid', 'KFC', 'KFC', '18202720293', 'er', null);
+INSERT INTO `t_restaurant` VALUES ('2c0bd6c542eadab343ab9a7d', '武汉东鑫酒店光谷店', '珞瑜东路197号', '(027)87801969', 'er', null);
+INSERT INTO `t_restaurant` VALUES ('0b92c31edf8103223617dc3b', '湘鄂情(光谷店)', '武汉市洪山区关山大道111号光谷时代广场4楼(近关山街公交车站)', '(027)87597777', 'er', null);
+INSERT INTO `t_restaurant` VALUES ('d219bb1dcdc5bc92f40e779a', '真功夫(光谷店)', '珞喻东路佳园路中商平价2楼', '13517213310', 're', null);
 
 -- ----------------------------
 -- Table structure for `t_user`

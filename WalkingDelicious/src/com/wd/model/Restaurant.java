@@ -7,14 +7,14 @@ public class Restaurant {
 	private String 		restaurantAddress;
 	private String		restaurantPhone;
 	private String		imgUrl;
-	private double		price;
+	private Double		price;
 	
 	public Restaurant() {
 	}
 	
 	public Restaurant(String id, String restaurantName,
 			String restaurantAddress, String restaurantPhone, String imgUrl,
-			double price) {
+			Double price) {
 		this.id = id;
 		this.restaurantName = restaurantName;
 		this.restaurantAddress = restaurantAddress;
@@ -38,18 +38,10 @@ public class Restaurant {
 		this.price = price;
 	}
 	public Restaurant(String id){
-		this.id=id;
+		setId(id);
 		setRestaurantName("");
 		setRestaurantAddress("");
 		setRestaurantPhone("");
-	}
-
-	
-	public Restaurant(String argId,String argName,String address,String phone){
-		setId(argId);
-		setRestaurantName(argName);
-		setRestaurantAddress(address);
-		setRestaurantPhone(phone);
 	}
 	/**
 	 * @return the id

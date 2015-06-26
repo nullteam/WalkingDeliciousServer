@@ -78,7 +78,9 @@ public class ProcessOrder extends HttpServlet {
 					 request.getParameter("orderNum"),
 					 request.getParameter("restaurantName"),
 					 request.getParameter("restaurantAddress"),
-					 request.getParameter("restaurantPhone")
+					 request.getParameter("restaurantPhone"),
+					 request.getParameter("imgUrl"),
+					 request.getParameter("price")
 					 );
 			 if(flagBoolean) jsonObject.put("result", "1");
 			 else jsonObject.put("result", "0");
@@ -116,20 +118,26 @@ public class ProcessOrder extends HttpServlet {
 		// Put your code here
 	}
 	
-	public Boolean addOrder(String userId,String restaurantId,String orderNum,String name,String address,String phone) {
+	public Boolean addOrder(String userId,String restaurantId,String orderNum,String name,String address,String phone,String url,String price) {
 		boolean flag=false;
 		if(
 				userId==null||
 				restaurantId==null||
 				orderNum==null||
 				name==null||
-				address==null||
-				phone==null				
-		) return flag;
+				address==null
+		) {
+			System.out.println("add order parameter has null");
+			return flag;
+			}
+		
+		if(phone==null) phone="unknown";
+		if(url==null) url="";
+		if(price==null) price="0.00";
 		OrderDao dao = new OrderDao();
-		Restaurant restaurant = new Restaurant(restaurantId, name, address, phone);
+		Restaurant restaurant = new Restaurant(restaurantId, name, address, phone,url,Double.parseDouble(price));
 		Order order  = new Order(userId, restaurantId, name, address, phone, Integer.parseInt(orderNum));
-		flag=dao.addOrder(order);
+		flag=dao.addOrder(restaurant,order);
 		return flag;
 	}
 	
@@ -140,8 +148,8 @@ public class ProcessOrder extends HttpServlet {
 		return flag;
 	}
 	
-	public List<Order> queryOrder(String userId) {
-		if(userId==null) return new ArrayList<Order>();
-		return new OrderDao().getOrderByUserId(userId);
+	public List<JSONObject> queryOrder(String userId) {
+		if(userId==null) return new ArrayList<JSONObject>();
+		return new OrderDao().getCompleteOrderByUserId(userId);
 	}
 }

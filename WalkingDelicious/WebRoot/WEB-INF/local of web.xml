@@ -47,15 +47,15 @@
   </servlet-mapping>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://w.rdc.sae.sina.com.cn:3307/app_walkingdelicious</param-value>
+        <param-value>jdbc:mysql://localhost:3306/walking_delicious</param-value>
     </context-param>
     <context-param>
         <param-name>dbUsername</param-name>
-        <param-value>21j5oxywwz</param-value>
+        <param-value>root</param-value>
     </context-param>
     <context-param>
         <param-name>dbPassword</param-name>
-        <param-value>m10z30xh4jlm1x12l3l1y223hjhi4wx35hi25yxm</param-value>
+        <param-value>zengli19940726</param-value>
     </context-param>
     <context-param>
         <param-name>tableUser</param-name>

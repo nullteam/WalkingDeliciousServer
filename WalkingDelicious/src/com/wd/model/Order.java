@@ -1,8 +1,7 @@
 package com.wd.model;
 
-import java.sql.Timestamp;
-
 public class Order {
+	private Integer id;
 	private String userId;
 	private String restaurantId;
 	private String restaurantName;
@@ -25,6 +24,19 @@ public class Order {
 	public Order(String userId, String restaurantId, String restaurantName,
 			String restaurantAddress, String restaurantPhone, Integer orderNum,
 			String orderTime) {
+		this.userId = userId;
+		this.restaurantId = restaurantId;
+		this.restaurantName = restaurantName;
+		this.restaurantAddress = restaurantAddress;
+		this.restaurantPhone = restaurantPhone;
+		this.orderNum = orderNum;
+		this.orderTime = orderTime;
+	}
+	
+	public Order(Integer id,String userId, String restaurantId, String restaurantName,
+			String restaurantAddress, String restaurantPhone, Integer orderNum,
+			String orderTime) {
+		this.id = id;
 		this.userId = userId;
 		this.restaurantId = restaurantId;
 		this.restaurantName = restaurantName;
@@ -76,6 +88,10 @@ public class Order {
 	public void setOrderTime(String orderTime) {
 		this.orderTime = orderTime;
 	}
-
-	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}	
 }

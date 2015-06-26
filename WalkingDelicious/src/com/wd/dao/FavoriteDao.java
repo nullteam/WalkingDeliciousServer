@@ -8,16 +8,14 @@ import java.util.List;
 
 import net.sf.json.JSONObject;
 
-import com.wd.model.Favorite;
 import com.wd.model.Restaurant;
-import com.wd.model.User;
 import com.wd.util.DBUtil;
 import com.wd.util.SqlAssembling;
 
 public class FavoriteDao {
 	private final String FAVORITE_TABLE_NAME = "t_favorite";
 
-	private final String ID_TABLE = "id";
+	//private final String ID_TABLE = "id";
 	private final String USER_ID_TABLE = "user_id";
 	private final String RESTAURANT_ID_TABLE = "restaurant_id";
 	private final String FAVORITE_ADD_STRRING = "INSERT INTO "
@@ -36,7 +34,7 @@ public class FavoriteDao {
 
 	private List<JSONObject> getFavoritesByEachId(String field, String value) {
 		List<JSONObject> jsonArray = new ArrayList<JSONObject>();
-		String userId = value;
+		//String userId = value;
 		if (value == null)
 			return jsonArray;
 		try {
@@ -55,6 +53,8 @@ public class FavoriteDao {
 				js.put("restaurantName", restaurant.getRestaurantName());
 				js.put("restaurantAddress", restaurant.getRestaurantAddress());
 				js.put("restaurantPhone", restaurant.getRestaurantPhone());
+				js.put("imgUrl", restaurant.getImgUrl());
+				js.put("price", restaurant.getPrice());
 				jsonArray.add(js);
 			}
 		} catch (SQLException e) {
