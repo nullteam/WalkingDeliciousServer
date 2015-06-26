@@ -66,6 +66,7 @@ public class ProcessOrder extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setCharacterEncoding("utf-8");
 		String codeString = request.getParameter("code");
 		if(codeString==null) return ;
 		Integer code = Integer.parseInt(codeString);
@@ -103,7 +104,8 @@ public class ProcessOrder extends HttpServlet {
 		}
 		
 		PrintWriter out = response.getWriter();
-		response.setCharacterEncoding("utf-8");	
+			
+		System.out.println(jsonObject.toString());
 		out.println(jsonObject.toString());
 		out.flush();
 		out.close();

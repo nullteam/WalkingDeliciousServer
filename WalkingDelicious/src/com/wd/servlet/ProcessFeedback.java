@@ -48,6 +48,7 @@ public class ProcessFeedback extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setCharacterEncoding("utf-8");
 		String resultString = "0";
 		if(request.getParameter("code")==null) return ;
 		int code = Integer.parseInt(request.getParameter("code"));
@@ -64,6 +65,7 @@ public class ProcessFeedback extends HttpServlet {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("result", resultString);
 		PrintWriter out = response.getWriter();
+		
 		out.println(jsonObject.toString());
 		out.flush();
 		out.close();

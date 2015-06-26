@@ -67,6 +67,7 @@ public class ProcessFavorite extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setCharacterEncoding("utf-8");
 		if (request.getParameter("code") == null)
 			return;
 		Integer code = Integer.parseInt(request.getParameter("code"));
@@ -113,7 +114,7 @@ public class ProcessFavorite extends HttpServlet {
 		}
 
 		PrintWriter out = response.getWriter();
-		response.setCharacterEncoding("utf-8");
+		
 		out.println(jsonObject.toString());
 		out.flush();
 		out.close();

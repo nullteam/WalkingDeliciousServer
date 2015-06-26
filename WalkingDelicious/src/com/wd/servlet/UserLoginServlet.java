@@ -32,6 +32,7 @@ public class UserLoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		resp.setCharacterEncoding("utf-8");	
 		String usernameString = req.getParameter(USERNAME_CLIENT);
 		String passwordString = req.getParameter(PASSWORD_CLIENT);
 		if(usernameString==null||passwordString==null) return;
@@ -57,7 +58,7 @@ public class UserLoginServlet extends HttpServlet {
 			break;
 		}
 		PrintWriter out = resp.getWriter();
-		resp.setCharacterEncoding("utf-8");	
+		
 		out.print(jsonObject.toString());
 		out.flush();
 		out.close();

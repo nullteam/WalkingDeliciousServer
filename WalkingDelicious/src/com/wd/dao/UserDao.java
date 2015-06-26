@@ -189,9 +189,26 @@ public class UserDao {
 		}		
 		return flag;
 	}
+	//验证用户名和密码的合法性
+		private Boolean illegalVerifyPassword(String arg){
+			Boolean flag = true;
+			//判断字符串的长度
+			int strLength = arg.length();
+			if(strLength<6||strLength>12) return false;
+			
+			//判断其余字符是否是字母或者是数字
+			for (int i = 0; i < arg.length(); i++) {
+				char tmpChar = arg.charAt(i);
+				if(!Character.isLetter(tmpChar)&&!Character.isDigit(tmpChar)){
+					flag = false;
+					break;
+				}
+			}		
+			return flag;
+		}
 	//验证user的用户名和密码是否是合法的
 	private Boolean illegalVerifyUser(User user){
-		return illegalVerify(user.getUsername())&&illegalVerify(user.getPassword());
+		return illegalVerify(user.getUsername())&&illegalVerifyPassword(user.getPassword());
 	}
 	
 	
