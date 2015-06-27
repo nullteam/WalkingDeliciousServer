@@ -87,8 +87,8 @@ public class OrderDao {
 		if(order==null) return flag;
 		try {
 			RestaurantDao dao = new RestaurantDao();
-			restaurant = dao.getRestaurant(order.getRestaurantId());
-			if(restaurant==null) dao.addRestaurant(restaurant);
+			Restaurant restaurantTmp = dao.getRestaurant(restaurant);
+			if(restaurantTmp==null) if(!dao.addRestaurant(restaurant)) return flag;
 			PreparedStatement ps =DBUtil.getInstance().getConnection().prepareStatement(ORDER_ADD_STRING);
 			ps.setString(1, order.getUserId());
 			ps.setString(2,order.getRestaurantId());
